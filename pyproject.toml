@@ -94,3 +94,6 @@ warn_redundant_casts = true
 
 [tool.licensecheck]
 using = "PEP631:test;dev;doc"
+
+[tool.codespell]
+skip = "./pygaul/data/gaul_continent.json"

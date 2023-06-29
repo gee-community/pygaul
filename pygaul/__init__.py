@@ -3,18 +3,26 @@ Easy access to administrative boundary defined by FAO GAUL 2015 from Python scri
 
 This lib provides access to FAO GAUL 2015 datasets from a Python script. it is the best boundary dataset available for GEE at this point. We provide access to The current version (2015) administrative areas till level 2.
 """
+import json
 import warnings
 from difflib import get_close_matches
+from itertools import product
 from pathlib import Path
+from typing import List, Union
 
+import ee
 import numpy as np
 import pandas as pd
+
+ee.Initialize()
 
 __version__ = "0.0.0"
 __author__ = "Pierrick Rambaud"
 __email__ = "pierrick.rambaud49@gmail.com"
 
 __gaul_data__ = Path(__file__).parent / "data" / "gaul_database.parquet"
+__gaul_continent__ = Path(__file__).parent / "data" / "gaul_continent.json"
+__gaul_asset__ = "FAO/GAUL/2015/level{}"
 
 
 def get_names(name: str = "", admin: str = "", content_level: int = -1) -> pd.DataFrame:
@@ -100,3 +108,88 @@ def get_names(name: str = "", admin: str = "", content_level: int = -1) -> pd.Da
     final_df = sub_df[sub_df[columns[0]].astype(bool)]
 
     return final_df
+
+
+def _items(
+    name: str = "", admin: str = "", content_level: int = -1
+) -> ee.FeatureCollection:
+    """
+    Return the requested administrative boundaries using the name or the administrative code.
+
+    Same method as get_items but only accept single requests in str format.
+
+    Args:
+        name: The name of an administrative area. Cannot be set along with :code:`admin`.
+        admin: The id of an administrative area in the FAO GAUL nomenclature. Cannot be set along with :code:`name`.
+        content_level: The level to use in the final dataset. Default to -1 (use level from the area).
+
+    Returns:
+        The FeatureCollection of the requested area with all the GADM attributes.
+    """
+    # call to get_names without level to raise an error if the requested level won't work
+    df = get_names(name, admin)
+    if len(df) > 1:
+        raise ValueError(
+            f'The requested name ("{name}") is not unique ({len(df)} results). To retrieve it, please use the `admin` parameter instead. If you don\'t know the GAUL code, use the following code, it will return the GAUL codes as well:\n`get_names(name="{name}")`'
+        )
+    df.columns[0][3]
+
+    # now load the useful one to get content_level
+    df = get_names(name, admin, content_level)
+    content_level = df.columns[1][3]
+
+    # checks have already been performed in get_names and there should
+    # be one single result
+    ids = [int(v) for v in df[f"ADM{content_level}_CODE"].to_list()]
+
+    # read the accurate dataset
+    feature_collection = ee.FeatureCollection(
+        __gaul_asset__.format(content_level)
+    ).filter(ee.Filter.inList(f"ADM{content_level}_CODE", ids))
+
+    return feature_collection
+
+
+def get_items(
+    name: Union[str, List[str]] = "",
+    admin: Union[str, List[str]] = "",
+    content_level: int = -1,
+) -> ee.FeatureCollection:
+    """
+    Return the requested administrative boundaries using the name or the administrative code.
+
+    Return an ee.FeatureCollection representing an administrative region. The region can be requested either by its "name" or its "admin", the lib will identify the area level on the fly. The user can also request for a specific level for the GeoDataFrame features e.g. get all admin level 1 of a country. If nothing is set we will infer the level of the item and if the level is higher than the found item, it will be ignored. If Nothing is found the method will return an error.
+
+    Args:
+        name: The name of an administrative area. Cannot be set along with :code:`admin`. it can be a list or a single name.
+        admin: The id of an administrative area in the GADM nomenclature. Cannot be set along with :code:`name`. It can be a list or a single admin code.
+        content_level: The level to use in the final dataset. Default to -1 (use level from the area).
+
+    Returns:
+        The FeatureCollection of the requested area with all the GADM attributes.
+    """
+    # set up the loop
+    names = [name] if isinstance(name, str) else name
+    admins = [admin] if isinstance(admin, str) else admin
+
+    # check that they are not all empty
+    if names == [""] == admins:
+        raise ValueError('at least "name" or "admin" need to be set.')
+
+    # special parsing for continents. They are saved as admins to avoid any duplication
+    continents = json.loads(__gaul_continent__.read_text())
+    if len(names) == 1 and names[0].lower() in continents:
+        admins = [c for c in continents[names[0].lower()]]
+        names = [""]
+
+    # use itertools, normally one of them is empty so it will raise an error
+    # if not the case as admin and name will be set together
+    fc_list = [_items(n, a, content_level) for n, a in product(names, admins)]
+
+    # avoid concat if not needed for speed boost
+    feature_collection = fc_list[0]
+    if len(fc_list) > 1:
+        for fc in fc_list[1:]:
+            feature_collection = feature_collection.merge(fc)
+
+    return feature_collection
