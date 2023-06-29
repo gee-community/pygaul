@@ -1,0 +1,4 @@
+Usage
+=====
+
+**pyGAUL** usage documentation.
