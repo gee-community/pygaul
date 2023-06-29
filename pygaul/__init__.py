@@ -17,15 +17,6 @@ __email__ = "pierrick.rambaud49@gmail.com"
 __gaul_data__ = Path(__file__).parent / "data" / "gaul_database.parquet"
 
 
-def hello_world() -> str:
-    """Hello world demo method.
-
-    Returns:
-        the hello world string
-    """
-    return "hello world !"
-
-
 def get_names(name: str = "", admin: str = "", content_level: int = -1) -> pd.DataFrame:
     """
     Return the list of names available in a administrative layer using the name or the administrative code.
