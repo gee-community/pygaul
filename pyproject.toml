@@ -41,7 +41,7 @@ Homepage = "https://github.com/12rambau/pygaul"
 [project.optional-dependencies]
 dev = ["pre-commit", "commitizen", "nox"]
 test = ["pytest", "pytest-sugar", "pytest-cov", "pytest-deadfixtures"]
-doc = ["sphinx>=6.2.1", "pydata-sphinx-theme", "sphinx-copybutton", "sphinx-design", "sphinx-icon", "sphinx-autoapi"]
+doc = ["sphinx>=6.2.1", "pydata-sphinx-theme", "sphinx-copybutton", "sphinx-design", "sphinx-icon", "sphinx-autoapi", "geemap", "jupyter-sphinx"]
 
 [tool.setuptools]
 include-package-data = false
