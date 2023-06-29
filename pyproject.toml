@@ -17,7 +17,12 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
 ]
 requires-python = ">=3.6.9"
-dependencies = ["deprecated>=1.2.14"]
+dependencies = [
+    "deprecated>=1.2.14",
+    "pandas",
+    "earthengine-api",
+    "pyarrow"
+]
 
 [[project.authors]]
 name = "Pierrick Rambaud"
@@ -63,7 +68,10 @@ testpaths = "tests"
 ignore-init-module-imports = true
 fix = true
 select = ["E", "F", "W", "I", "D", "RUF"]
-ignore = ["E501"]  # line too long | Black take care of it
+ignore = [
+    "E501",  # line too long | Black take care of it
+    "D212",  # Multi-line docstring | We use D213
+]
 
 [tool.ruff.flake8-quotes]
 docstring-quotes = "double"
