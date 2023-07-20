@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pygaul"
-version = "0.0.0"
+version = "0.1.0"
 description = "Easy access to administrative boundary defined by FAO GAUL from a Python script."
 keywords = ["skeleton", "Python"]
 classifiers = [
@@ -54,7 +54,7 @@ exclude = ["docs*", "tests*"]
 [tool.commitizen]
 tag_format = "v$major.$minor.$patch$prerelease"
 update_changelog_on_bump = false
-version = "0.0.0"
+version = "0.1.0"
 version_files = [
     "pyproject.toml:version",
     "pygaul/__init__.py:__version__",
