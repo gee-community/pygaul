@@ -6,6 +6,11 @@ Get items
 
 The PyGAUL lib can be used to extract information from the FAO GAUL dataset as :code:`ee.FeatureCollection`.
 
+.. important::
+
+    **PyGAUL** is not managing the connection to Google Earth Engine API. The user is responsible to set up the Initialization as he see fit.
+    This is a feature to allow users with exotic GEE connection (e.g. service accounts) to continue use the lib without any modification.
+
 Countries
 ^^^^^^^^^
 
@@ -17,6 +22,9 @@ For example to extract the France geometry you can use the following code:
 
     import pygaul
     from geemap import Map
+    import ee
+
+    ee.Initialize()
 
     fc = pygaul.get_items(name="France")
 
@@ -32,6 +40,9 @@ If you know the code of the area you try to use, you can use the GADM code inste
 
     import pygaul
     from geemap import Map
+    import ee
+
+    ee.Initialize()
 
     fc = pygaul.get_items(admin="85")
 
@@ -50,6 +61,9 @@ One is not bind to only request a country, any level can be accessed using both 
 
     import pygaul
     from geemap import Map
+    import ee
+
+    ee.Initialize()
 
     fc = pygaul.get_items(name="Corse-du-Sud")
 
@@ -72,6 +86,9 @@ Using the :code:`content_level` option, one can require smaller administrative l
 
     import pygaul
     from geemap import Map
+    import ee
+
+    ee.Initialize()
 
     fc = pygaul.get_items(admin="85", content_level=2)
 
@@ -90,6 +107,9 @@ To perform regional analysis that aggregate multiple boundaries, you can now req
 
     import pygaul
     from geemap import Map
+    import ee
+
+    ee.Initialize()
 
     fc = pygaul.get_items(admin="85", content_level=2)
 
@@ -116,7 +136,7 @@ It's possible to request all countries from one single continent using one of th
 
     import pygaul
 
-    gdf = pygaul.get_items(name="europe")
+    fc = pygaul.get_items(name="europe")
 
 Find names
 ----------
@@ -141,6 +161,9 @@ If you make an error when writing the name of your input, the error message will
     :raises: ValueError
 
     import pygaul
+    import ee
 
-    gdf = pygaul.get_items(name="Franc")
+    ee.Initialize()
+
+    fc = pygaul.get_items(name="Franc")
 
