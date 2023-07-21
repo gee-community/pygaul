@@ -8,7 +8,9 @@ build:
     python: "3.10"
   jobs:
     pre_build:
-      - sphinx-apidoc -o docs/api pygaul
+      - mkdir -p $HOME/.config
+      - mkdir -p $HOME/.config/earthengine
+      - echo $EARTHENGINE_TOKEN > $HOME/.config/earthengine/credentials
 
 sphinx:
   configuration: docs/conf.py

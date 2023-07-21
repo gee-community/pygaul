@@ -93,4 +93,4 @@ def gee_configure() -> None:
         ee.Initialize(http_transport=httplib2.Http())
 
 
-gee_configure()
+#gee_configure()
