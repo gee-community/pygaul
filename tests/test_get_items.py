@@ -3,6 +3,7 @@
 import math
 
 import pytest
+import ee
 
 import pygaul
 
