@@ -39,13 +39,36 @@ content-type = "text/x-rst"
 Homepage = "https://github.com/12rambau/pygaul"
 
 [project.optional-dependencies]
-dev = ["pre-commit", "commitizen", "nox"]
-test = ["pytest", "pytest-sugar", "pytest-cov", "pytest-deadfixtures", "httplib2"]
-doc = ["sphinx>=6.2.1", "pydata-sphinx-theme", "sphinx-copybutton", "sphinx-design", "sphinx-icon", "sphinx-autoapi", "geemap", "jupyter-sphinx", "httplib2"]
+dev = [
+    "pre-commit",
+    "commitizen",
+    "nox"
+]
+test = [
+    "pytest",
+    "pytest-sugar",
+    "pytest-cov",
+    "pytest-deadfixtures",
+    "httplib2"
+]
+doc = [
+    "sphinx>=6.2.1",
+    "pydata-sphinx-theme",
+    "sphinx-copybutton",
+    "sphinx-design",
+    "sphinx-icon",
+    "sphinx-autoapi",
+    "geemap",
+    "jupyter-sphinx",
+    "httplib2",
+]
 
 [tool.setuptools]
-include-package-data = false
+include-package-data = true
 license-files = ["LICENSE.txt"]
+
+[tool.setuptools.package-data]
+pygaul = ["data/gaul_database.parquet", "data/gaul_continent.json"]
 
 [tool.setuptools.packages.find]
 include = ["pygaul*"]
