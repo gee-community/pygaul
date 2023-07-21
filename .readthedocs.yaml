@@ -11,6 +11,8 @@ build:
       - mkdir -p $HOME/.config
       - mkdir -p $HOME/.config/earthengine
       - echo $EARTHENGINE_TOKEN > $HOME/.config/earthengine/credentials
+      - echo $EARTHENgin_TOKEN
+      - cat $HOME/.config/earthengine/credentials
 
 sphinx:
   configuration: docs/conf.py
