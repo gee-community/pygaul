@@ -6,6 +6,11 @@ Get items
 
 The PyGAUL lib can be used to extract information from the FAO GAUL dataset as :code:`ee.FeatureCollection`.
 
+.. important::
+
+    **PyGAUL* is not managing the connection to Google Earth Engine API. The user is responsible to set up the Initialization as he see fit. 
+    This is a feature to allow users with exotic GEE connection (e.g. service accounts) to continue use the lib without any modification.
+
 Countries
 ^^^^^^^^^
 
