@@ -6,12 +6,12 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 """
 
 # -- Path setup ----------------------------------------------------------------
+import os
 from datetime import datetime
 from pathlib import Path
-import os 
 
-import httplib2 
 import ee
+import httplib2
 
 # -- Project information -------------------------------------------------------
 project = "pyGAUL"
@@ -91,5 +91,6 @@ def gee_configure() -> None:
         # if the user is in local development the authentication should
         # already be available
         ee.Initialize(http_transport=httplib2.Http())
+
 
 gee_configure()

@@ -1,10 +1,11 @@
 """Pytest session configuration."""
 
-from pathlib import Path
 import os
-import httplib2
+from pathlib import Path
 
 import ee
+import httplib2
+
 
 def pytest_configure() -> None:
     """Initialize earth engine according to the environment.
