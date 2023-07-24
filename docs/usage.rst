@@ -111,7 +111,7 @@ To perform regional analysis that aggregate multiple boundaries, you can now req
 
     ee.Initialize()
 
-    fc = pygaul.get_items(admin="85", content_level=2)
+    fc = pygaul.get_items(name=["France", "Germany"], content_level=1)
 
     # display it in a map
     m = Map()
