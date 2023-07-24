@@ -90,8 +90,7 @@ def test_multiple_input():
     assert fc1.getInfo() == fc2.getInfo()
 
 
-# def test_continent():
-#    """Check that the continent are working."""
-#    gdf = pygaul.get_items(name="antartica")
-#    assert len(gdf) == 1
-#    assert gdf.GID_0.to_list() == ["ATA"]
+def test_continent():
+    """Check that the continent are working."""
+    fc = pygaul.get_items(name="antartica")
+    assert fc.aggregate_array("ADM0_CODE").getInfo() == [10]
