@@ -7,6 +7,7 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 # -- Path setup ----------------------------------------------------------------
 import os
+import re
 from datetime import datetime
 from pathlib import Path
 
@@ -81,15 +82,20 @@ def gee_configure() -> None:
         # if the credentials token is asved in the environment use it
         if "EARTHENGINE_TOKEN" in os.environ:
 
-            # write the token to the appropriate folder
+            # get the token from environment variable
             ee_token = os.environ["EARTHENGINE_TOKEN"]
+
+            # as long as RDT quote the token, we need to remove the quotes before writing
+            # the string to the file
+            pattern = r"^'[^']*'$"
+            if re.match(pattern, ee_token) is not None:
+                ee_token = ee_token[1:-1]
+
+            # write the token to the appropriate folder
             credential_folder_path = Path.home() / ".config" / "earthengine"
             credential_folder_path.mkdir(parents=True, exist_ok=True)
             credential_file_path = credential_folder_path / "credentials"
             credential_file_path.write_text(ee_token)
-
-            print(ee_token)
-            print(credential_file_path.read_text())
 
         # if the user is in local development the authentication should
         # already be available
