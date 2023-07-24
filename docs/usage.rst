@@ -132,11 +132,21 @@ It's possible to request all countries from one single continent using one of th
 -   Oceania
 -   Africa
 
-.. code-block:: python
+.. jupyter-execute:: python
 
     import pygaul
+    from geemap import Map
+    import ee
+
+    ee.Initialize()
 
     fc = pygaul.get_items(name="europe")
+
+    # display it in a map
+    m = Map()
+    m.centerObject(fc)
+    m.addLayer(fc, {"color": "red"}, "")
+    m
 
 Find names
 ----------
