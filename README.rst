@@ -38,10 +38,6 @@ pyGAUL
     :target: https://pygaul.readthedocs.io/en/latest/
     :alt: Documentation Status
 
-.. image:: https://img.shields.io/badge/all_contributors-0-orange.svg
-    :alt: All contributors
-    :target: AUTHORS.rst
-
 Overview
 --------
 
