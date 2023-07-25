@@ -2,9 +2,12 @@
 import json
 from pathlib import Path
 
+import pandas as pd
+
 import pygaul
 
 continent_file = Path(__file__).parents[1] / "pygaul" / "data" / "gaul_continent.json"
+database_file = Path(__file__).parents[1] / "pygaul" / "data" / "gaul_database.parquet"
 
 
 def test_file():
@@ -15,7 +18,7 @@ def test_file():
 def test_continent():
     """Check that the continent are working."""
     fc = pygaul.get_items(name="antartica")
-    assert fc.aggregate_array("ADM0_CODE").getInfo() == [10]
+    assert fc.aggregate_array("ADM0_CODE").getInfo() == [10, 88, 109]
 
 
 def test_duplication():
@@ -33,3 +36,20 @@ def test_duplication():
             duplicates[continent] = duplicates[continent].union(intersection)
 
     assert all([len(duplicates[c]) == 0 for c in duplicates])
+
+
+def test_orphan():
+    """Check that all countries are in a continent."""
+    data = pd.read_parquet(database_file)
+    continent_dict = json.loads(continent_file.read_text())
+    countries = data.ADM0_CODE.unique()
+    orphan = []
+    for country in countries:
+        exist = False
+        for continent in continent_dict:
+            if country in continent_dict[continent]:
+                exist = True
+                break
+        if exist is False:
+            orphan.append(country)
+    assert len(orphan) == 0
