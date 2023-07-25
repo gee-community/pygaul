@@ -29,8 +29,7 @@ For example to extract the France geometry you can use the following code:
     fc = pygaul.get_items(name="France")
 
     # display it in a map
-    m = Map()
-    m.centerObject(fc)
+    m = Map(zoom=5, center=[46.21, 2.21])
     m.addLayer(fc, {"color": "red"}, "")
     m
 
@@ -47,8 +46,7 @@ If you know the code of the area you try to use, you can use the GADM code inste
     fc = pygaul.get_items(admin="85")
 
     # display it in a map
-    m = Map()
-    m.centerObject(fc)
+    m = Map(zoom=5, center=[46.21, 2.21])
     m.addLayer(fc, {"color": "red"}, "")
     m
 
@@ -68,8 +66,7 @@ One is not bind to only request a country, any level can be accessed using both 
     fc = pygaul.get_items(name="Corse-du-Sud")
 
     # display it in a map
-    m = Map()
-    m.centerObject(fc)
+    m = Map(zoom=8, center=[41.86, 8.97])
     m.addLayer(fc, {"color": "red"}, "")
     m
 
@@ -93,8 +90,7 @@ Using the :code:`content_level` option, one can require smaller administrative l
     fc = pygaul.get_items(admin="85", content_level=2)
 
     # display it in a map
-    m = Map()
-    m.centerObject(fc)
+    m = Map(zoom=5, center=[46.21, 2.21])
     m.addLayer(fc, {"color": "red"}, "")
     m
 
@@ -114,8 +110,7 @@ To perform regional analysis that aggregate multiple boundaries, you can now req
     fc = pygaul.get_items(name=["France", "Germany"], content_level=1)
 
     # display it in a map
-    m = Map()
-    m.centerObject(fc)
+    m = Map(zoom=5, center=[48.83, 5.17])
     m.addLayer(fc, {"color": "red"}, "")
     m
 
@@ -143,8 +138,7 @@ It's possible to request all countries from one single continent using one of th
     fc = pygaul.get_items(name="europe")
 
     # display it in a map
-    m = Map()
-    m.centerObject(fc)
+    m = Map(zoom=4, center = [49.38237278700955, 31.464843750000004])
     m.addLayer(fc, {"color": "red"}, "")
     m
 
