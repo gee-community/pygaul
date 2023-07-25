@@ -65,7 +65,7 @@ doc = [
 
 [tool.setuptools]
 include-package-data = true
-license-files = ["LICENSE.txt"]
+license-files = ["LICENSE"]
 
 [tool.setuptools.package-data]
 pygaul = ["data/gaul_database.parquet", "data/gaul_continent.json"]
