@@ -155,6 +155,16 @@ For example to get the name and codes of all the departments in France you can r
 
     pygaul.get_names(admin="85", content_level=2)
 
+.. note::
+
+    If needed, one can get the names of the upper administrative layers by setting the ``complete`` parameter to ``True``.
+
+    .. jupyter-execute::
+
+        import pygaul
+
+        pygaul.get_names(admin="1270", content_level=2, complete=True)
+
 Suggestion
 ----------
 
