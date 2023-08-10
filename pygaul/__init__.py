@@ -23,7 +23,9 @@ __gaul_continent__ = Path(__file__).parent / "data" / "gaul_continent.json"
 __gaul_asset__ = "FAO/GAUL/2015/level{}"
 
 
-def get_names(name: str = "", admin: str = "", content_level: int = -1, complete: bool = False) -> pd.DataFrame:
+def get_names(
+    name: str = "", admin: str = "", content_level: int = -1, complete: bool = False
+) -> pd.DataFrame:
     """
     Return the list of names available in a administrative layer using the name or the administrative code.
 

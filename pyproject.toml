@@ -50,7 +50,8 @@ test = [
     "pytest-sugar",
     "pytest-cov",
     "pytest-deadfixtures",
-    "httplib2"
+    "httplib2",
+    "pytest-regressions"
 ]
 doc = [
     "sphinx>=6.2.1",
