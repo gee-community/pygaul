@@ -1,6 +1,5 @@
 """Tests of the ``get_items`` function."""
 
-import math
 
 import pytest
 
