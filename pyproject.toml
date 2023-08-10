@@ -61,7 +61,7 @@ doc = [
     "sphinx-icon",
     "sphinx-autoapi",
     "geemap",
-    "jupyter-sphinx",
+    "jupyter-sphinx!=0.4.0", # https://github.com/jupyter/jupyter-sphinx/issues/222
     "httplib2",
 ]
 
