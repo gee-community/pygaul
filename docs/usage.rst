@@ -165,6 +165,15 @@ For example to get the name and codes of all the departments in France you can r
 
         pygaul.get_names(admin="1270", content_level=2, complete=True)
 
+.. note::
+
+    You can also get the list of all the country names by omitting admin and name parameters. If a level is not provided the table will only show country names but other parameters remain availables.
+
+    .. code-block:: python
+
+        pygaul.get_names()
+
+
 Suggestion
 ----------
 
