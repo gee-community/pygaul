@@ -54,7 +54,7 @@ test = [
     "pytest-regressions"
 ]
 doc = [
-    "sphinx>=6.2.1",
+    "sphinx>=6.2.1,<7", # https://github.com/pydata/pydata-sphinx-theme/issues/1404
     "pydata-sphinx-theme",
     "sphinx-copybutton",
     "sphinx-design",
@@ -63,6 +63,7 @@ doc = [
     "geemap",
     "jupyter-sphinx!=0.4.0", # https://github.com/jupyter/jupyter-sphinx/issues/222
     "httplib2",
+    "ipykernel",
 ]
 
 [tool.setuptools]
