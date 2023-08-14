@@ -65,7 +65,12 @@ def test_case_insensitive():
     fc1 = pygaul.get_items(name="Singapore")
     fc2 = pygaul.get_items(name="singaPORE")
 
-    assert fc1.getInfo() == fc2.getInfo()
+    # just check that all ids of the fgeatures are the same as they all come from the same
+    # initial ee.FeatureCollection
+    ids1 = fc1.aggregate_array("system:index").sort()
+    ids2 = fc2.aggregate_array("system:index").sort()
+
+    assert ids1.equals(ids2).getInfo()
 
 
 def test_multiple_input(data_regression):
@@ -73,5 +78,9 @@ def test_multiple_input(data_regression):
     fc1 = pygaul.get_items(name=["france", "germany"])
     data_regression.check(fc1.getInfo())
 
+    # just check that all ids of the fgeatures are the same as they all come from the same
+    # initial ee.FeatureCollection
     fc2 = pygaul.get_items(admin=["85", "93"])
-    assert fc1.getInfo() == fc2.getInfo()
+    ids1 = fc1.aggregate_array("system:index").sort()
+    ids2 = fc2.aggregate_array("system:index").sort()
+    assert ids1.equals(ids2).getInfo()
