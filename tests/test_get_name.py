@@ -26,35 +26,36 @@ def test_non_existing():
         pygaul.get_names(admin="t0t0")
 
 
-def test_area():
+def test_area(dataframe_regression):
     """Request a known."""
-    sublevels = ["Singapore"]
     df = pygaul.get_names(name="Singapore")
-    assert sorted(df.ADM0_NAME.to_list()) == sublevels
+    dataframe_regression.check(df)
 
 
-def test_sub_content():
+def test_sub_content(dataframe_regression):
     """Request a sublevel."""
-    sublevels = ["2658", "2659", "2660", "2661", "2662", "2663", "2664", "2665", "2666"]
     df = pygaul.get_names(name="Singapore", content_level=1)
-    assert sorted(df.ADM1_CODE.to_list()) == sublevels
-    assert len(df) == 9
+    dataframe_regression.check(df)
 
 
-def test_too_high():
+def test_complete_content(dataframe_regression):
+    """Request the complete hierarchy of an area."""
+    df = pygaul.get_names(name="Singapore", content_level=1, complete=True)
+    dataframe_regression.check(df)
+
+
+def test_too_high(dataframe_regression):
     """Request a sublevel higher than available in the area."""
     with pytest.warns(UserWarning):
         df = pygaul.get_names(admin="2658", content_level=0)
-        assert len(df) == 1
-        assert df.ADM1_NAME.to_list() == ["Ang Mo Kio-cheng San"]
+        dataframe_regression.check(df)
 
 
-def test_too_low():
+def test_too_low(dataframe_regression):
     """Request a sublevel lower than available in the area."""
     with pytest.warns(UserWarning):
         df = pygaul.get_names(admin="2658", content_level=4)
-        assert len(df) == 1
-        assert df.ADM1_NAME.to_list() == ["Ang Mo Kio-cheng San"]
+        dataframe_regression.check(df)
 
 
 def test_case_insensitive():

@@ -15,10 +15,10 @@ def test_file():
     assert continent_file.is_file()
 
 
-def test_continent():
+def test_continent(data_regression):
     """Check that the continent are working."""
     fc = pygaul.get_items(name="antartica")
-    assert fc.aggregate_array("ADM0_CODE").getInfo() == [10, 88, 109]
+    data_regression.check(fc.aggregate_array("ADM0_CODE").getInfo())
 
 
 def test_duplication():

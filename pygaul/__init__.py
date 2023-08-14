@@ -23,7 +23,9 @@ __gaul_continent__ = Path(__file__).parent / "data" / "gaul_continent.json"
 __gaul_asset__ = "FAO/GAUL/2015/level{}"
 
 
-def get_names(name: str = "", admin: str = "", content_level: int = -1) -> pd.DataFrame:
+def get_names(
+    name: str = "", admin: str = "", content_level: int = -1, complete: bool = False
+) -> pd.DataFrame:
     """
     Return the list of names available in a administrative layer using the name or the administrative code.
 
@@ -33,6 +35,7 @@ def get_names(name: str = "", admin: str = "", content_level: int = -1) -> pd.Da
         name: The name of a administrative area. Cannot be set along with :code:`admin`.
         admin: The id of an administrative area in the FAO GAUL nomenclature. Cannot be set along with :code:`name`.
         content_level: The level to use in the final dataset. Default to -1 (use level of the selected area).
+        complete: If True, the method will return all the names of the higher administrative areas. Default to False.
 
     Returns:
         The list of all the available names.
@@ -94,16 +97,19 @@ def get_names(name: str = "", admin: str = "", content_level: int = -1) -> pd.Da
         )
         content_level = max_level
 
-    # get the columns name to display
+    # get the columns name corresponding to the requested level
     columns = [f"ADM{content_level}_NAME", f"ADM{content_level}_CODE"]
 
     # the list will contain duplicate as all the smaller admin level will be included
-    sub_df = sub_df[columns].drop_duplicates(ignore_index=True)
+    sub_df = sub_df.drop_duplicates(subset=columns, ignore_index=True)
 
     # the list will contain NA as all the bigger admin level will be selected as well
     # the database is read as pure string so dropna cannot be used
     # .astype is also a vectorized operation so it goes very fast
-    final_df = sub_df[sub_df[columns[0]].astype(bool)]
+    sub_df = sub_df[sub_df[columns[0]].astype(bool)]
+
+    # filter the df if complete is set to False, the only displayed columns will be the one requested
+    final_df = sub_df if complete is True else sub_df[columns]
 
     return final_df
 
