@@ -5,10 +5,10 @@ import pytest
 import pygaul
 
 
-def test_empty():
-    """Empty request."""
-    with pytest.raises(Exception):
-        pygaul.get_names()
+def test_empty(dataframe_regression):
+    """Empty request, should list the countries."""
+    df = pygaul.get_names()
+    dataframe_regression.check(df)
 
 
 def test_duplicate_input():
