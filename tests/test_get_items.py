@@ -29,30 +29,35 @@ def test_non_existing():
 
 
 def test_area(data_regression):
-    """Request a known."""
+    """Request a known geometry."""
     fc = pygaul.get_items(name="Singapore")
-    data_regression.check(fc.getInfo())
+    assert fc.size().getInfo() == 1
+    assert fc.first().get("ADM0_CODE").getInfo() == 222
+    data_regression.check(fc.geometry().bounds().coordinates().get(0).getInfo())
 
 
 def test_sub_content(data_regression):
     """Request a sublevel."""
     fc = pygaul.get_items(name="Singapore", content_level=1)
-    data_regression.check(fc.getInfo())
+    assert all([i == 222 for i in fc.aggregate_array("ADM0_CODE").getInfo()])
+    data_regression.check(fc.aggregate_array("ADM1_CODE").getInfo())
 
 
-def test_too_high(data_regression):
+def test_too_high():
     """Request a sublevel higher than available in the area."""
     with pytest.warns(UserWarning):
         fc = pygaul.get_items(admin="2658", content_level=0)
-        data_regression.check(fc.getInfo())
+        assert fc.size().getInfo() == 1
+        assert fc.aggregate_array("ADM1_CODE").getInfo() == [2658]
 
 
-def test_too_low(data_regression):
+def test_too_low():
     """Request a sublevel lower than available in the area."""
     # request a level too low
     with pytest.warns(UserWarning):
         fc = pygaul.get_items(admin="2658", content_level=3)
-        data_regression.check(fc.getInfo())
+        assert fc.size().getInfo() == 1
+        assert fc.aggregate_array("ADM1_CODE").getInfo() == [2658]
 
 
 def test_case_insensitive():
