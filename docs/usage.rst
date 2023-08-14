@@ -6,6 +6,10 @@ Get items
 
 The PyGAUL lib can be used to extract information from the FAO GAUL dataset as :code:`ee.FeatureCollection`.
 
+.. note::
+
+    :code:`ee.FeatureCollection` can easily be converted to :code:`GeoDataFrame` but if interacting with Earthengine is not the chore of your usage, have a look to `pygadm <https://github.com/12rambau/pygadm>`__. It will provide accès to smaller administrative boundaries and return directly a gdf.
+
 .. important::
 
     **PyGAUL** is not managing the connection to Google Earth Engine API. The user is responsible to set up the Initialization as he see fit.
