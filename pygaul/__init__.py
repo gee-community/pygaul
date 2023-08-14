@@ -14,7 +14,7 @@ import ee
 import numpy as np
 import pandas as pd
 
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 __author__ = "Pierrick Rambaud"
 __email__ = "pierrick.rambaud49@gmail.com"
 
