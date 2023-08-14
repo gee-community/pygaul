@@ -29,30 +29,35 @@ def test_non_existing():
 
 
 def test_area(data_regression):
-    """Request a known."""
+    """Request a known geometry."""
     fc = pygaul.get_items(name="Singapore")
-    data_regression.check(fc.getInfo())
+    assert fc.size().getInfo() == 1
+    assert fc.first().get("ADM0_CODE").getInfo() == 222
+    data_regression.check(fc.geometry().bounds().coordinates().get(0).getInfo())
 
 
 def test_sub_content(data_regression):
     """Request a sublevel."""
     fc = pygaul.get_items(name="Singapore", content_level=1)
-    data_regression.check(fc.getInfo())
+    assert all([i == 222 for i in fc.aggregate_array("ADM0_CODE").getInfo()])
+    data_regression.check(fc.aggregate_array("ADM1_CODE").getInfo())
 
 
-def test_too_high(data_regression):
+def test_too_high():
     """Request a sublevel higher than available in the area."""
     with pytest.warns(UserWarning):
         fc = pygaul.get_items(admin="2658", content_level=0)
-        data_regression.check(fc.getInfo())
+        assert fc.size().getInfo() == 1
+        assert fc.aggregate_array("ADM1_CODE").getInfo() == [2658]
 
 
-def test_too_low(data_regression):
+def test_too_low():
     """Request a sublevel lower than available in the area."""
     # request a level too low
     with pytest.warns(UserWarning):
         fc = pygaul.get_items(admin="2658", content_level=3)
-        data_regression.check(fc.getInfo())
+        assert fc.size().getInfo() == 1
+        assert fc.aggregate_array("ADM1_CODE").getInfo() == [2658]
 
 
 def test_case_insensitive():
@@ -60,7 +65,12 @@ def test_case_insensitive():
     fc1 = pygaul.get_items(name="Singapore")
     fc2 = pygaul.get_items(name="singaPORE")
 
-    assert fc1.getInfo() == fc2.getInfo()
+    # just check that all ids of the fgeatures are the same as they all come from the same
+    # initial ee.FeatureCollection
+    ids1 = fc1.aggregate_array("system:index").sort()
+    ids2 = fc2.aggregate_array("system:index").sort()
+
+    assert ids1.equals(ids2).getInfo()
 
 
 def test_multiple_input(data_regression):
@@ -68,5 +78,9 @@ def test_multiple_input(data_regression):
     fc1 = pygaul.get_items(name=["france", "germany"])
     data_regression.check(fc1.getInfo())
 
+    # just check that all ids of the fgeatures are the same as they all come from the same
+    # initial ee.FeatureCollection
     fc2 = pygaul.get_items(admin=["85", "93"])
-    assert fc1.getInfo() == fc2.getInfo()
+    ids1 = fc1.aggregate_array("system:index").sort()
+    ids2 = fc2.aggregate_array("system:index").sort()
+    assert ids1.equals(ids2).getInfo()
