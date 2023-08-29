@@ -157,7 +157,7 @@ For example to get the name and codes of all the departments in France you can r
 
     import pygaul
 
-    pygaul.get_names(admin="85", content_level=2)
+    pygaul.Names(admin="85", content_level=2)
 
 .. note::
 
@@ -167,7 +167,7 @@ For example to get the name and codes of all the departments in France you can r
 
         import pygaul
 
-        pygaul.get_names(admin="1270", content_level=2, complete=True)
+        pygaul.Names(admin="1270", content_level=2, complete=True)
 
 .. note::
 
@@ -175,7 +175,7 @@ For example to get the name and codes of all the departments in France you can r
 
     .. code-block:: python
 
-        pygaul.get_names()
+        pygaul.Names()
 
 
 Suggestion
