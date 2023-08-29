@@ -13,6 +13,7 @@ from typing import List, Union
 import ee
 import numpy as np
 import pandas as pd
+from deprecated.sphinx import deprecated, versionadded
 
 __version__ = "0.2.3"
 __author__ = "Pierrick Rambaud"
@@ -23,6 +24,7 @@ __gaul_continent__ = Path(__file__).parent / "data" / "gaul_continent.json"
 __gaul_asset__ = "FAO/GAUL/2015/level{}"
 
 
+@versionadded(version="0.3.0", reason="Add a Names object to handle names")
 class Names(pd.DataFrame):
     def __init__(
         self,
@@ -126,6 +128,7 @@ class Names(pd.DataFrame):
         super().__init__(final_df)
 
 
+@deprecated(version="0.3.0", reason="Use the Names object instead")
 def get_names(
     name: str = "", admin: str = "", content_level: int = -1, complete: bool = False
 ) -> pd.DataFrame:
