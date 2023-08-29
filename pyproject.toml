@@ -51,7 +51,7 @@ test = [
     "pytest-cov",
     "pytest-deadfixtures",
     "httplib2",
-    "pytest-regressions"
+    "pytest-regressions @ git+https://github.com/12rambau/pytest-regressions@isinstance"
 ]
 doc = [
     "sphinx>=6.2.1,<7", # https://github.com/pydata/pydata-sphinx-theme/issues/1404
@@ -97,6 +97,7 @@ select = ["E", "F", "W", "I", "D", "RUF"]
 ignore = [
     "E501",  # line too long | Black take care of it
     "D212",  # Multi-line docstring | We use D213
+    "D101",  # Missing docstring in public class | We use D106
 ]
 
 [tool.ruff.flake8-quotes]
