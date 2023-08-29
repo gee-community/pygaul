@@ -25,7 +25,7 @@ __gaul_asset__ = "FAO/GAUL/2015/level{}"
 
 
 @versionadded(version="0.3.0", reason="Add a Names object to handle names")
-class Names(pd.DataFrame):
+class AdmNames(pd.DataFrame):
     def __init__(
         self,
         name: str = "",
@@ -146,49 +146,96 @@ def get_names(
     Returns:
         The list of all the available names.
     """
-    return Names(name, admin, content_level, complete)
+    return AdmNames(name, admin, content_level, complete)
 
 
-def _items(
-    name: str = "", admin: str = "", content_level: int = -1
-) -> ee.FeatureCollection:
-    """
-    Return the requested administrative boundaries using the name or the administrative code.
+@versionadded(
+    version="0.3.0", reason="Add an AdmItems object to handle administrative items"
+)
+class AdmItems(ee.FeatureCollection):
+    def __init__(
+        self,
+        name: Union[str, List[str]] = "",
+        admin: Union[str, List[str]] = "",
+        content_level: int = -1,
+    ):
+        """Object to handle administrative boundaries using the name or the administrative code.
 
-    Same method as get_items but only accept single requests in str format.
+        Return an ee.FeatureCollection representing an administrative region. The region can be requested either by its "name" or its "admin", the lib will identify the area level on the fly. The user can also request for a specific level for the GeoDataFrame features e.g. get all admin level 1 of a country. If nothing is set we will infer the level of the item and if the level is higher than the found item, it will be ignored. If Nothing is found the method will return an error.
 
-    Args:
-        name: The name of an administrative area. Cannot be set along with :code:`admin`.
-        admin: The id of an administrative area in the FAO GAUL nomenclature. Cannot be set along with :code:`name`.
-        content_level: The level to use in the final dataset. Default to -1 (use level from the area).
+        Args:
+            name: The name of an administrative area. Cannot be set along with :code:`admin`. it can be a list or a single name.
+            admin: The id of an administrative area in the GADM nomenclature. Cannot be set along with :code:`name`. It can be a list or a single admin code.
+            content_level: The level to use in the final dataset. Default to -1 (use level from the area).
+        """
+        # set up the loop
+        names = [name] if isinstance(name, str) else name
+        admins = [admin] if isinstance(admin, str) else admin
 
-    Returns:
-        The FeatureCollection of the requested area with all the GADM attributes.
-    """
-    # call to get_names without level to raise an error if the requested level won't work
-    df = get_names(name, admin)
-    if len(df) > 1:
-        raise ValueError(
-            f'The requested name ("{name}") is not unique ({len(df)} results). To retrieve it, please use the `admin` parameter instead. If you don\'t know the GAUL code, use the following code, it will return the GAUL codes as well:\n`get_names(name="{name}")`'
-        )
-    df.columns[0][3]
+        # check that they are not all empty
+        if names == [""] == admins:
+            raise ValueError('at least "name" or "admin" need to be set.')
 
-    # now load the useful one to get content_level
-    df = get_names(name, admin, content_level)
-    content_level = df.columns[1][3]
+        # special parsing for continents. They are saved as admins to avoid any duplication
+        continents = json.loads(__gaul_continent__.read_text())
+        if len(names) == 1 and names[0].lower() in continents:
+            admins = [c for c in continents[names[0].lower()]]
+            names = [""]
 
-    # checks have already been performed in get_names and there should
-    # be one single result
-    ids = [int(v) for v in df[f"ADM{content_level}_CODE"].to_list()]
+        # use itertools, normally one of them is empty so it will raise an error
+        # if not the case as admin and name will be set together
+        fc_list = [self._items(n, a, content_level) for n, a in product(names, admins)]
 
-    # read the accurate dataset
-    feature_collection = ee.FeatureCollection(
-        __gaul_asset__.format(content_level)
-    ).filter(ee.Filter.inList(f"ADM{content_level}_CODE", ids))
+        # concat all the data
+        feature_collection = fc_list[0]
+        if len(fc_list) > 1:
+            for fc in fc_list[1:]:
+                feature_collection = feature_collection.merge(fc)
 
-    return feature_collection
+        super().__init__(feature_collection)
+
+    def _items(
+        self, name: str = "", admin: str = "", content_level: int = -1
+    ) -> ee.FeatureCollection:
+        """
+        Return the requested administrative boundaries from a single name or administrative code.
+
+        Args:
+            name: The name of an administrative area. Cannot be set along with :code:`admin`.
+            admin: The id of an administrative area in the FAO GAUL nomenclature. Cannot be set along with :code:`name`.
+            content_level: The level to use in the final dataset. Default to -1 (use level from the area).
+
+        Returns:
+            The FeatureCollection of the requested area with all the GAUL attributes.
+        """
+        # call to get_names without level to raise an error if the requested level won't work
+        df = get_names(name, admin)
+        if len(df) > 1:
+            raise ValueError(
+                f'The requested name ("{name}") is not unique ({len(df)} results). '
+                f"To retrieve it, please use the `admin` parameter instead. "
+                f"If you don't know the GAUL code, use the following code, "
+                f'it will return the GAUL codes as well:\n`get_names(name="{name}")`'
+            )
+        df.columns[0][3]
+
+        # now load the useful one to get content_level
+        df = get_names(name, admin, content_level)
+        content_level = df.columns[1][3]
+
+        # checks have already been performed in get_names and there should
+        # be one single result
+        ids = [int(v) for v in df[f"ADM{content_level}_CODE"].to_list()]
+
+        # read the accurate dataset
+        feature_collection = ee.FeatureCollection(
+            __gaul_asset__.format(content_level)
+        ).filter(ee.Filter.inList(f"ADM{content_level}_CODE", ids))
+
+        return feature_collection
 
 
+@deprecated(version="0.3.0", reason="Use the AdmItems object instead")
 def get_items(
     name: Union[str, List[str]] = "",
     admin: Union[str, List[str]] = "",
@@ -207,28 +254,4 @@ def get_items(
     Returns:
         The FeatureCollection of the requested area with all the GADM attributes.
     """
-    # set up the loop
-    names = [name] if isinstance(name, str) else name
-    admins = [admin] if isinstance(admin, str) else admin
-
-    # check that they are not all empty
-    if names == [""] == admins:
-        raise ValueError('at least "name" or "admin" need to be set.')
-
-    # special parsing for continents. They are saved as admins to avoid any duplication
-    continents = json.loads(__gaul_continent__.read_text())
-    if len(names) == 1 and names[0].lower() in continents:
-        admins = [c for c in continents[names[0].lower()]]
-        names = [""]
-
-    # use itertools, normally one of them is empty so it will raise an error
-    # if not the case as admin and name will be set together
-    fc_list = [_items(n, a, content_level) for n, a in product(names, admins)]
-
-    # avoid concat if not needed for speed boost
-    feature_collection = fc_list[0]
-    if len(fc_list) > 1:
-        for fc in fc_list[1:]:
-            feature_collection = feature_collection.merge(fc)
-
-    return feature_collection
+    return AdmItems(name, admin, content_level)

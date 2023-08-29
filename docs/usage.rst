@@ -1,8 +1,8 @@
 Usage
 =====
 
-Get items
----------
+Get admininstrative items
+-------------------------
 
 The PyGAUL lib can be used to extract information from the FAO GAUL dataset as :code:`ee.FeatureCollection`.
 
@@ -18,7 +18,7 @@ The PyGAUL lib can be used to extract information from the FAO GAUL dataset as :
 Countries
 ^^^^^^^^^
 
-Using the :code:`get_items` methods, you can access an administrative area using either its name or its GAUL identification code.
+Using the :code:`AdmItems` class, you can access an administrative area using either its name or its GAUL identification code.
 
 For example to extract the France geometry you can use the following code:
 
@@ -30,7 +30,7 @@ For example to extract the France geometry you can use the following code:
 
     ee.Initialize()
 
-    fc = pygaul.get_items(name="France")
+    fc = pygaul.AdmItems(name="France")
 
     # display it in a map
     m = Map(zoom=5, center=[46.21, 2.21])
@@ -47,7 +47,7 @@ If you know the code of the area you try to use, you can use the GADM code inste
 
     ee.Initialize()
 
-    fc = pygaul.get_items(admin="85")
+    fc = pygaul.AdmItems(admin="85")
 
     # display it in a map
     m = Map(zoom=5, center=[46.21, 2.21])
@@ -67,7 +67,7 @@ One is not bind to only request a country, any level can be accessed using both 
 
     ee.Initialize()
 
-    fc = pygaul.get_items(name="Corse-du-Sud")
+    fc = pygaul.AdmItems(name="Corse-du-Sud")
 
     # display it in a map
     m = Map(zoom=8, center=[41.86, 8.97])
@@ -91,7 +91,7 @@ Using the :code:`content_level` option, one can require smaller administrative l
 
     ee.Initialize()
 
-    fc = pygaul.get_items(admin="85", content_level=2)
+    fc = pygaul.AdmItems(admin="85", content_level=2)
 
     # display it in a map
     m = Map(zoom=5, center=[46.21, 2.21])
@@ -111,7 +111,7 @@ To perform regional analysis that aggregate multiple boundaries, you can now req
 
     ee.Initialize()
 
-    fc = pygaul.get_items(name=["France", "Germany"], content_level=1)
+    fc = pygaul.AdmItems(name=["France", "Germany"], content_level=1)
 
     # display it in a map
     m = Map(zoom=5, center=[48.83, 5.17])
@@ -139,25 +139,25 @@ It's possible to request all countries from one single continent using one of th
 
     ee.Initialize()
 
-    fc = pygaul.get_items(name="europe")
+    fc = pygaul.AdmItems(name="europe")
 
     # display it in a map
     m = Map(zoom=4, center = [49.38237278700955, 31.464843750000004])
     m.addLayer(fc, {"color": "red"}, "")
     m
 
-Find names
-----------
+Find administrative names
+-------------------------
 
-To get the available name and GAUL code in a administrative layer you can use the :code:`get_names` method with the same parameters. Use then these names in a :code:`get_items` request to get the geometry.
+To get the available name and GAUL code in a administrative layer you can use the :code:`AdmNames` class with the same parameters. Use then these names in a :code:`AdmItems` request to get the geometry.
 
-For example to get the name and codes of all the departments in France you can run:
+For example to get the names and codes of all the departments in France you can run:
 
 .. jupyter-execute::
 
     import pygaul
 
-    pygaul.Names(admin="85", content_level=2)
+    pygaul.AdmNames(admin="85", content_level=2)
 
 .. note::
 
@@ -167,7 +167,7 @@ For example to get the name and codes of all the departments in France you can r
 
         import pygaul
 
-        pygaul.Names(admin="1270", content_level=2, complete=True)
+        pygaul.AdmNames(admin="1270", content_level=2, complete=True)
 
 .. note::
 
@@ -175,7 +175,7 @@ For example to get the name and codes of all the departments in France you can r
 
     .. code-block:: python
 
-        pygaul.Names()
+        pygaul.AdmNames()
 
 
 Suggestion
@@ -192,5 +192,5 @@ If you make an error when writing the name of your input, the error message will
 
     ee.Initialize()
 
-    fc = pygaul.get_items(name="Franc")
+    fc = pygaul.AdmItems(name="Franc")
 
