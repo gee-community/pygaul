@@ -34,8 +34,8 @@ pyGAUL
     :target: https://github.com/12rambau/pygaul/actions/workflows/unit.yaml
     :alt: build
 
-.. image:: https://img.shields.io/codecov/c/github/12rambau/pygaul?logo=codecov&logoColor=white
-    :target: https://codecov.io/gh/12rambau/pygaul
+.. image:: https://img.shields.io/codecov/c/github/gee-community/pygaul?logo=codecov&logoColor=white
+    :target: https://codecov.io/gh/gee-community/pygaul
     :alt: Test Coverage
 
 .. image:: https://img.shields.io/readthedocs/pygaul?logo=readthedocs&logoColor=white
