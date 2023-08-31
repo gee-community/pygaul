@@ -26,6 +26,10 @@ pyGAUL
     :target: https://pypi.org/project/pygaul/
     :alt: PyPI version
 
+.. image:: https://img.shields.io/conda/vn/conda-forge/pygaul?logo=condaforge&logoColor=white&color=orange
+    :target: https://anaconda.org/conda-forge/pygaul
+    :alt: conda distrib
+
 .. image:: https://img.shields.io/github/actions/workflow/status/12rambau/pygaul/unit.yaml?logo=github&logoColor=white
     :target: https://github.com/12rambau/pygaul/actions/workflows/unit.yaml
     :alt: build
@@ -61,7 +65,7 @@ and then request area of interest from their name or GADM Id:
 
    import pygaul
 
-   gdf = pygaul.get_items(name="Singapore", content_level=1)
+   gdf = pygaul.AdmItems(name="Singapore", content_level=1)
 
 Credits
 -------
