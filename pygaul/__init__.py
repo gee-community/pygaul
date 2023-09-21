@@ -6,7 +6,7 @@ This lib provides access to FAO GAUL 2015 datasets from a Python script. it is t
 import json
 import warnings
 from difflib import get_close_matches
-from functools import cache
+from functools import lru_cache
 from itertools import product
 from pathlib import Path
 from typing import List, Union
@@ -25,7 +25,7 @@ __gaul_continent__ = Path(__file__).parent / "data" / "gaul_continent.json"
 __gaul_asset__ = "FAO/GAUL/2015/level{}"
 
 
-@cache
+@lru_cache(maxsize=1)
 def _df() -> pd.DataFrame:
     """Get the parquet database."""
     return pd.read_parquet(__gaul_data__)
