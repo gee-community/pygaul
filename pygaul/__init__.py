@@ -6,6 +6,7 @@ This lib provides access to FAO GAUL 2015 datasets from a Python script. it is t
 import json
 import warnings
 from difflib import get_close_matches
+from functools import cache
 from itertools import product
 from pathlib import Path
 from typing import List, Union
@@ -22,6 +23,12 @@ __email__ = "pierrick.rambaud49@gmail.com"
 __gaul_data__ = Path(__file__).parent / "data" / "gaul_database.parquet"
 __gaul_continent__ = Path(__file__).parent / "data" / "gaul_continent.json"
 __gaul_asset__ = "FAO/GAUL/2015/level{}"
+
+
+@cache
+def _df() -> pd.DataFrame:
+    """Get the parquet database."""
+    return pd.read_parquet(__gaul_data__)
 
 
 @versionadded(version="0.3.0", reason="Add a Names object to handle names")
@@ -49,7 +56,7 @@ class AdmNames(pd.DataFrame):
 
         # if a name or admin number is set, we need to filter the dataset accordingly
         # if not we will simply consider the world dataset
-        df = pd.read_parquet(__gaul_data__)
+        df = _df()
         if name or admin:
             # set the id we look for and tell the function if its a name or an admin
             is_name = True if name else False
