@@ -52,6 +52,7 @@ test = [
     "pytest-deadfixtures",
     "httplib2",
     "pytest-regressions>=2.4.3", # https://github.com/ESSS/pytest-regressions/issues/136
+    "pytest-gee",
 ]
 doc = [
     "sphinx>=6.2.1,<7", # https://github.com/pydata/pydata-sphinx-theme/issues/1404
