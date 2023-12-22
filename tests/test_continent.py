@@ -17,7 +17,7 @@ def test_file():
 
 def test_continent(data_regression):
     """Check that the continent are working."""
-    fc = pygaul.AdmItems(name="antartica")
+    fc = pygaul.Items(name="antartica")
     data_regression.check(fc.aggregate_array("ADM0_CODE").getInfo())
 
 
