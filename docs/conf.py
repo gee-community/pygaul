@@ -18,7 +18,7 @@ import httplib2
 project = "pyGAUL"
 author = "Pierrick Rambaud"
 copyright = f"2020-{datetime.now().year}, {author}"
-release = "0.3.2"
+release = "0.3.3"
 
 # -- General configuration -----------------------------------------------------
 extensions = [
