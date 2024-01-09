@@ -1,10 +1,5 @@
-.. raw:: html
-
-    <p align="center">
-      <img src="docs/_static/logo.png" width=240 alt="header"></a>
-    </p>
-
-    <h1 align="center">pyGAUL</h1>
+pyGAUL
+======
 
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg?logo=opensourceinitiative&logoColor=white
     :target: LICENSE
@@ -49,13 +44,13 @@
 Overview
 --------
 
+.. image:: docs/_static/logo.svg
+    :width: 20%
+    :align: right
+
 Easy access to administrative boundary defined by FAO GAUL 2015 from Python scripts.
 
 This lib provides access to FAO GAUL 2015 datasets from a Python script. it is the best boundary dataset available for GEE at this point. We provide access to The current version (2015) administrative areas till level 2.
-
-.. note::
-
-   the dataset was generated in 2015 by the Food and Alimentation Organization (FAO). It has not been updated on Google Earthengine since then. Use with caution on disputed territories.
 
 install it using either ``pip`` or ``conda``:
 
@@ -70,6 +65,11 @@ and then request area of interest from their name or GADM Id:
    import pygaul
 
    gdf = pygaul.Items(name="Singapore", content_level=1)
+
+Note
+----
+
+the dataset was generated in 2015 by the Food and Alimentation Organization (FAO). It has not been updated on Google Earthengine since then. Use with caution on disputed territories.
 
 Credits
 -------
