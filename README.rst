@@ -25,6 +25,10 @@ pyGAUL
     :target: https://pypi.org/project/pygaul/
     :alt: PyPI version
 
+.. image:: https://img.shields.io/conda/vn/conda-forge/pygaul?logo=anaconda&logoColor=white&color=blue
+    :target: https://anaconda.org/conda-forge/pygaul
+    :alt: conda-forge version badge
+
 .. image:: https://img.shields.io/conda/vn/conda-forge/pygaul?logo=condaforge&logoColor=white&color=orange
     :target: https://anaconda.org/conda-forge/pygaul
     :alt: conda distrib
