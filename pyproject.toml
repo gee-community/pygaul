@@ -124,4 +124,4 @@ warn_redundant_casts = true
 using = "PEP631:test;dev;doc"
 
 [tool.codespell]
-skip = "./pygaul/data/gaul_continent.json,**/*.csv"
+skip = "./pygaul/data/gaul_continent.json,**/*.csv,**/*.svg"

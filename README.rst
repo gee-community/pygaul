@@ -1,10 +1,5 @@
-.. raw:: html
-
-    <p align="center">
-      <img src="docs/_static/logo.png" width=240 alt="header"></a>
-    </p>
-
-    <h1 align="center">pyGAUL</h1>
+pyGAUL
+======
 
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg?logo=opensourceinitiative&logoColor=white
     :target: LICENSE
@@ -48,6 +43,10 @@
 
 Overview
 --------
+
+.. image:: docs/_static/logo.svg
+    :width: 20%
+    :align: right
 
 Easy access to administrative boundary defined by FAO GAUL 2015 from Python scripts.
 
