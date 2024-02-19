@@ -70,6 +70,7 @@ autoapi_dirs = ["../pygaul"]
 autoapi_python_class_content = "init"
 autoapi_member_order = "groupwise"
 
+
 # -- Script to authenticate to Earthengine using a token -----------------------
 def gee_configure() -> None:
     """Initialize earth engine according to the environment.

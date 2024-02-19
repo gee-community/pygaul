@@ -1,6 +1,5 @@
 """Tests of the ``AdmItems`` function."""
 
-
 import pytest
 
 import pygaul
