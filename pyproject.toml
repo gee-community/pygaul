@@ -21,7 +21,10 @@ classifiers = [
 ]
 requires-python = ">=3.8"
 dependencies = [
-  "deprecated>=1.2.14"
+    "deprecated>=1.2.14",
+    "pandas",
+    "earthengine-api",
+    "pyarrow",
 ]
 
 [[project.authors]]
@@ -42,14 +45,22 @@ Homepage = "https://github.com/gee-community/pygaul"
 test = [
   "pytest",
   "pytest-cov",
-  "pytest-deadfixtures"
+  "pytest-deadfixtures",
+  "httplib2",
+  "pytest-regressions>=2.4.3", # https://github.com/ESSS/pytest-regressions/issues/136
+  "pytest-gee",
 ]
 doc = [
-  "sphinx>=6.2.1",
-  "pydata-sphinx-theme",
-  "sphinx-copybutton",
-  "sphinx-design",
-  "sphinx-autoapi"
+    "sphinx>=6.2.1,<7", # https://github.com/pydata/pydata-sphinx-theme/issues/1404
+    "pydata-sphinx-theme",
+    "sphinx-copybutton",
+    "sphinx-design",
+    "sphinx-icon",
+    "sphinx-autoapi",
+    "geemap",
+    "jupyter-sphinx!=0.4.0", # https://github.com/jupyter/jupyter-sphinx/issues/222
+    "httplib2",
+    "ipykernel",
 ]
 
 [tool.hatch.build.targets.wheel]

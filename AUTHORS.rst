@@ -6,11 +6,10 @@ Thanks goes to these wonderful people (`emoji key <https://allcontributors.org/d
       <tr>
         <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
         <td align="center">
-            <a href="#">
-               <img src="https://github.com/gee-community.png" width="70px;" alt="gee-community"/><br />
+            <a href="https://github.com/12rambau">
+               <img src="https://github.com/12rambau.png" width="70px;" alt="12rambau"/><br />
                <sub><b>Pierrick Rambaud</b></sub>
             </a>
-            <a href="#code" title="Code">💻</a>
          </td>
         <!-- ALL-CONTRIBUTORS-LIST:END -->
       </tr>

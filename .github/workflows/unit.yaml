@@ -8,6 +8,7 @@ on:
   pull_request:
 
 env:
+  EARTHENGINE_TOKEN: ${{ secrets.EARTHENGINE_TOKEN }}
   FORCE_COLOR: 1
   PIP_ROOT_USER_ACTION: ignore
 

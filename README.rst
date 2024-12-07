@@ -26,6 +26,10 @@ pyGAUL
     :target: https://pypi.org/project/pygaul/
     :alt: PyPI version
 
+.. |conda| image:: https://img.shields.io/conda/vn/conda-forge/pygaul?logo=condaforge&logoColor=white&color=orange
+    :target: https://anaconda.org/conda-forge/pygaul
+    :alt: conda distrib
+
 .. |build| image:: https://img.shields.io/github/actions/workflow/status/gee-community/pygaul/unit.yaml?logo=github&logoColor=white
     :target: https://github.com/gee-community/pygaul/actions/workflows/unit.yaml
     :alt: build
@@ -38,12 +42,38 @@ pyGAUL
     :target: https://pygaul.readthedocs.io/en/latest/
     :alt: Documentation Status
 
-|license| |commit| |ruff| |prettier| |pre-commmit| |pypi| |build| |coverage| |docs|
+|license| |commit| |ruff| |prettier| |pre-commmit| |pypi| |conda| |build| |coverage| |docs|
 
 Overview
 --------
 
-Easy access to administrative boundary defined by FAO GAUL from Python scripts
+.. image:: docs/_static/logo.svg
+    :width: 20%
+    :align: right
+
+Easy access to administrative boundary defined by FAO GAUL 2015 from Python scripts.
+
+This lib provides access to FAO GAUL 2015 datasets from a Python script. it is the best boundary dataset available for GEE at this point. We provide access to The current version (2015) administrative areas till level 2.
+
+install it using either ``pip`` or ``conda``:
+
+.. code-block:: console
+
+   pip install pygaul
+
+and then request area of interest from their name or GADM Id:
+
+.. code-block:: python
+
+   import pygaul
+
+   gdf = pygaul.Items(name="Singapore", content_level=1)
+
+Note
+----
+
+the dataset was generated in 2015 by the Food and Alimentation Organization (FAO). It has not been updated on Google Earthengine since then. Use with caution on disputed territories.
+
 
 Credits
 -------
