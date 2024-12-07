@@ -103,3 +103,6 @@ ignore_missing_imports = true
 install_types = true
 non_interactive = true
 warn_redundant_casts = true
+
+[tool.codespell]
+skip = "./pygaul/data/gaul_continent.json,**/*.csv,**/*.svg"
