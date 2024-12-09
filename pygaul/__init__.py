@@ -15,7 +15,7 @@ from typing import List, Union
 import ee
 import numpy as np
 import pandas as pd
-from deprecated.sphinx import deprecated, versionadded
+from deprecated.sphinx import deprecated, versionadded  # type: ignore [import-untyped]
 
 __version__ = "0.3.4"
 __author__ = "Pierrick Rambaud"

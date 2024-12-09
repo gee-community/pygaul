@@ -90,8 +90,10 @@ testpaths = "tests"
 
 [tool.ruff]
 line-length = 100
-ignore-init-module-imports = true
 fix = true
+
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "I", "D", "RUF"]
 ignore = [
   "E501",  # line too long | Black take care of it
@@ -99,10 +101,10 @@ ignore = [
   "D101",  # Missing docstring in public class | We use D106
 ]
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
 [tool.coverage.run]
