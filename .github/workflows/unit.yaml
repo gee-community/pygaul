@@ -48,15 +48,14 @@ jobs:
   build:
     needs: [lint, mypy]
     strategy:
-      fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
         include:
           - os: macos-latest # macos test
-            python-version: "3.11"
+            python-version: "3.12"
           - os: windows-latest # windows test
-            python-version: "3.11"
+            python-version: "3.12"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
