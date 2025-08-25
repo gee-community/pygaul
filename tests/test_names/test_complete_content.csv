@@ -1,10 +1,10 @@
-,ADM0_CODE,ADM0_NAME,ADM1_CODE,ADM1_NAME,ADM2_CODE,ADM2_NAME,ISO 3166-1 alpha-3
-0,222,Singapore,2658,Ang Mo Kio-cheng San,25419,,SGP
-1,222,Singapore,2659,Bukit Timah,25420,,SGP
-2,222,Singapore,2660,Central Singapore,25421,,SGP
-3,222,Singapore,2661,Hougang,25422,,SGP
-4,222,Singapore,2662,Marine Parade,25423,,SGP
-5,222,Singapore,2663,Northeast,25424,,SGP
-6,222,Singapore,2664,Potong Pasir,25425,,SGP
-7,222,Singapore,2665,Sembawang-hong Kah,25426,,SGP
-8,222,Singapore,2666,Tanjong Pagar,25427,,SGP
+,continent,gaul0_code,gaul0_name,gaul1_code,gaul1_name,gaul2_code,gaul2_name,iso3_code
+0,asia,269,Singapore,2968,Ang Mo Kio-Cheng San,130587,Administrative Unit Not Available,SGP
+1,asia,269,Singapore,2969,Bukit Timah,130588,Administrative Unit Not Available,SGP
+2,asia,269,Singapore,2970,Central Singapore,130589,Administrative Unit Not Available,SGP
+3,asia,269,Singapore,2971,Hougang,130590,Administrative Unit Not Available,SGP
+4,asia,269,Singapore,2972,Marine Parade,130591,Administrative Unit Not Available,SGP
+5,asia,269,Singapore,2973,Northeast,130592,Administrative Unit Not Available,SGP
+6,asia,269,Singapore,2974,Potong Pasir,130593,Administrative Unit Not Available,SGP
+7,asia,269,Singapore,2975,Sembawang-Hong Kah,130594,Administrative Unit Not Available,SGP
+8,asia,269,Singapore,2976,Tanjong Pagar,130595,Administrative Unit Not Available,SGP
