@@ -1,12 +1,15 @@
 [build-system]
-requires = ["setuptools>=61.2", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "pygaul"
 version = "0.3.4"
-description = "Easy access to administrative boundary defined by FAO GAUL from a Python script."
-keywords = ["skeleton", "Python"]
+description = "Easy access to administrative boundary defined by FAO GAUL from Python scripts"
+keywords = [
+  "skeleton",
+  "Python"
+]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -21,7 +24,7 @@ dependencies = [
     "deprecated>=1.2.14",
     "pandas",
     "earthengine-api",
-    "pyarrow"
+    "pyarrow",
 ]
 
 [[project.authors]]
@@ -36,22 +39,16 @@ file = "README.rst"
 content-type = "text/x-rst"
 
 [project.urls]
-Homepage = "https://github.com/12rambau/pygaul"
+Homepage = "https://github.com/gee-community/pygaul"
 
 [project.optional-dependencies]
-dev = [
-    "pre-commit",
-    "commitizen",
-    "nox"
-]
 test = [
-    "pytest",
-    "pytest-sugar",
-    "pytest-cov",
-    "pytest-deadfixtures",
-    "httplib2",
-    "pytest-regressions>=2.4.3", # https://github.com/ESSS/pytest-regressions/issues/136
-    "pytest-gee",
+  "pytest",
+  "pytest-cov",
+  "pytest-deadfixtures",
+  "httplib2",
+  "pytest-regressions>=2.4.3", # https://github.com/ESSS/pytest-regressions/issues/136
+  "pytest-gee",
 ]
 doc = [
     "sphinx>=6.2.1,<7", # https://github.com/pydata/pydata-sphinx-theme/issues/1404
@@ -67,16 +64,16 @@ doc = [
     "geetools",
 ]
 
-[tool.setuptools]
-license-files = ["LICENSE"]
-include-package-data = true
+[tool.hatch.build.targets.wheel]
+only-include = ["pygaul"]
 
-[tool.setuptools.package-data]
-pygaul = ["data/gaul_database.parquet", "data/gaul_continent.json"]
-
-[tool.setuptools.packages.find]
-include = ["pygaul*"]
-exclude = ["docs*", "tests*"]
+[tool.hatch.envs.default]
+dependencies = [
+  "pre-commit",
+  "commitizen",
+  "nox[uv]"
+]
+post-install-commands = ["pre-commit install"]
 
 [tool.commitizen]
 tag_format = "v$major.$minor.$patch$prerelease"
@@ -85,33 +82,34 @@ version = "0.3.4"
 version_files = [
     "pyproject.toml:version",
     "pygaul/__init__.py:__version__",
-    "docs/conf.py:release"
+    "docs/conf.py:release",
+    "CITATION.cff:version"
 ]
 
 [tool.pytest.ini_options]
 testpaths = "tests"
 
 [tool.ruff]
-ignore-init-module-imports = true
+line-length = 100
 fix = true
+
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "I", "D", "RUF"]
 ignore = [
-    "E501",  # line too long | Black take care of it
-    "D212",  # Multi-line docstring | We use D213
-    "D101",  # Missing docstring in public class | We use D106
+  "E501",  # line too long | Black take care of it
+  "D212",  # Multi-line docstring | We use D213
+  "D101",  # Missing docstring in public class | We use D106
 ]
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
 [tool.coverage.run]
 source = ["pygaul"]
-
-[tool.doc8]
-ignore = ["D001"] # we follow a 1 line = 1 paragraph style
 
 [tool.mypy]
 scripts_are_modules = true

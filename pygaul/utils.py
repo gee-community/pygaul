@@ -1,4 +1,5 @@
 """Utils methods for the package."""
+
 import os
 import re
 
@@ -19,16 +20,12 @@ def initialize_documentation():
         private_key = os.environ["EARTHENGINE_SERVICE_ACCOUNT"]
         # small massage of the key to remove the quotes coming from RDT
         private_key = (
-            private_key[1:-1]
-            if re.compile(r"^'[^']*'$").match(private_key)
-            else private_key
+            private_key[1:-1] if re.compile(r"^'[^']*'$").match(private_key) else private_key
         )
         ee.Initialize.geetools.from_service_account(private_key)
 
     elif "EARTHENGINE_PROJECT" in os.environ:
-        ee.Initialize(
-            project=os.environ["EARTHENGINE_PROJECT"], http_transport=httplib2.Http()
-        )
+        ee.Initialize(project=os.environ["EARTHENGINE_PROJECT"], http_transport=httplib2.Http())
 
     else:
         raise ValueError(

@@ -11,7 +11,7 @@ from datetime import datetime
 # -- Project information -------------------------------------------------------
 project = "pyGAUL"
 author = "Pierrick Rambaud"
-copyright = f"2020-{datetime.now().year}, {author}"
+copyright = f"2023-{datetime.now().year}, {author}"
 release = "0.3.4"
 
 # -- General configuration -----------------------------------------------------
@@ -19,9 +19,10 @@ extensions = [
     "sphinx_copybutton",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
+    "sphinx.ext.intersphinx",
     "sphinx_design",
-    "sphinxcontrib.icon",
     "autoapi.extension",
+    "sphinxcontrib.icon",
     "jupyter_sphinx",
 ]
 exclude_patterns = ["**.ipynb_checkpoints"]
@@ -40,7 +41,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/12rambau/pygaul",
+            "url": "https://github.com/gee-community/pygaul",
             "icon": "fa-brands fa-github",
         },
         {
@@ -48,10 +49,16 @@ html_theme_options = {
             "url": "https://pypi.org/project/pygaul/",
             "icon": "fa-brands fa-python",
         },
+        {
+            "name": "Conda",
+            "url": "https://anaconda.org/conda-forge/pygaul",
+            "icon": "fa-custom fa-conda",
+            "type": "fontawesome",
+        },
     ],
 }
 html_context = {
-    "github_user": "12rambau",
+    "github_user": "gee-community",
     "github_repo": "pygaul",
     "github_version": "main",
     "doc_path": "docs",
@@ -63,3 +70,6 @@ autodoc_typehints = "description"
 autoapi_dirs = ["../pygaul"]
 autoapi_python_class_content = "init"
 autoapi_member_order = "groupwise"
+
+# -- Options for intersphinx output --------------------------------------------
+intersphinx_mapping = {}
