@@ -3,6 +3,7 @@ import os
 import re
 
 import ee
+import geetools as geetools
 import httplib2
 
 
