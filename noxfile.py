@@ -12,54 +12,56 @@ nox.options.sessions = ["lint", "test", "docs", "mypy"]
 
 
 @nox.session(reuse_venv=True, venv_backend="uv")
-def lint(session):
+def lint(session: nox.Session):
     """Apply the pre-commits."""
     session.install("pre-commit")
     session.run("pre-commit", "run", "--all-files", *session.posargs)
 
 
 @nox.session(reuse_venv=True, venv_backend="uv")
-def test(session):
+def test(session: nox.Session):
     """Run the selected tests and report coverage in html."""
-    session.install(".[test]")
+    session.install("-e", ".[test]")
     test_files = session.posargs or ["tests"]
     session.run("pytest", "--cov", "--cov-report=html", *test_files)
 
 
 @nox.session(reuse_venv=True, name="ci-test", venv_backend="uv")
-def ci_test(session):
+def ci_test(session: nox.Session):
     """Run all the test and report coverage in xml."""
-    session.install(".[test]")
+    session.install("-e", ".[test]")
     session.run("pytest", "--cov", "--cov-report=xml")
 
 
 @nox.session(reuse_venv=True, name="dead-fixtures", venv_backend="uv")
-def dead_fixtures(session):
+def dead_fixtures(session: nox.Session):
     """Check for dead fixtures within the tests."""
-    session.install(".[test]")
+    session.install("-e", ".[test]")
     session.run("pytest", "--dead-fixtures")
 
 
 @nox.session(reuse_venv=True, venv_backend="uv")
-def docs(session):
+def docs(session: nox.Session):
     """Build the documentation."""
     build = session.posargs.pop() if session.posargs else "html"
-    session.install(".[doc]")
+    session.install("-e", ".[doc]")
     dst, warn = f"docs/_build/{build}", "warnings.txt"
     session.run("sphinx-build", "-v", "-b", build, "docs", dst, "-w", warn)
     session.run("python", "tests/check_warnings.py")
 
 
 @nox.session(name="mypy", reuse_venv=True, venv_backend="uv")
-def mypy(session):
+def mypy(session: nox.Session):
     """Run a mypy check of the lib."""
-    session.install("mypy")
+    # waiting for a fix to https://github.com/laurent-laporte-pro/deprecated/issues/63
+    # so we are forced to install "types-deprecated"
+    session.install("mypy", "types-deprecated")
     test_files = session.posargs or ["pygaul"]
     session.run("mypy", *test_files)
 
 
 @nox.session(reuse_venv=True, venv_backend="uv")
-def stubgen(session):
+def stubgen(session: nox.Session):
     """Generate stub files for the lib but requires human attention before merge."""
     session.install("mypy")
     package = session.posargs or ["pygaul"]
@@ -67,7 +69,7 @@ def stubgen(session):
 
 
 @nox.session(name="release-date", reuse_venv=True, venv_backend="uv")
-def release_date(session):
+def release_date(session: nox.session):
     """Update the release date of the citation file."""
     current_date = datetime.datetime.now().strftime("%Y-%m-%d")
 

@@ -93,7 +93,6 @@ testpaths = "tests"
 line-length = 100
 fix = true
 
-
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "D", "RUF"]
 ignore = [
