@@ -30,7 +30,7 @@ and then request area of interest from their name or GADM Id:
 
    import pygaul
 
-   gdf = pygaul.Items(name="Singapore", content_level=1)
+   fc = pygaul.Items(name="Singapore", content_level=1)
 
 Documentation contents
 ----------------------

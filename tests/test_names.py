@@ -47,14 +47,14 @@ def test_complete_content(dataframe_regression):
 def test_too_high(dataframe_regression):
     """Request a sublevel higher than available in the area."""
     with pytest.warns(UserWarning):
-        df = pygaul.Names(admin="2658", content_level=0)
+        df = pygaul.Names(admin="2968", content_level=0)
         dataframe_regression.check(df)
 
 
 def test_too_low(dataframe_regression):
     """Request a sublevel lower than available in the area."""
     with pytest.warns(UserWarning):
-        df = pygaul.Names(admin="2658", content_level=4)
+        df = pygaul.Names(admin="3435", content_level=4)
         dataframe_regression.check(df)
 
 
@@ -68,7 +68,7 @@ def test_case_insensitive():
 
 def test_suggestions():
     """Test that when a wrong name is given 5 options are proposed in the error message."""
-    expected_error = 'The requested "Franc" is not part of FAO GAUL 2015. The closest matches are: France, Franca, Ranco, Rancul, Ranchi.'
+    expected_error = 'The requested "Franc" is not part of FAO GAUL 2024. The closest matches are: France, Franca, Ranco, Franciou, Rancul.'
     with pytest.raises(ValueError, match=expected_error):
         pygaul.Names(name="Franc")
 

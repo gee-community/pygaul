@@ -3,7 +3,6 @@ Easy access to administrative boundary defined by FAO GAUL 2015 from Python scri
 
 This lib provides access to FAO GAUL 2015 datasets from a Python script. it is the best boundary dataset available for GEE at this point. We provide access to The current version (2015) administrative areas till level 2.
 """
-
 import json
 import warnings
 from difflib import get_close_matches
@@ -22,8 +21,7 @@ __author__ = "Pierrick Rambaud"
 __email__ = "pierrick.rambaud49@gmail.com"
 
 __gaul_data__ = Path(__file__).parent / "data" / "gaul_database.parquet"
-__gaul_continent__ = Path(__file__).parent / "data" / "gaul_continent.json"
-__gaul_asset__ = "FAO/GAUL/2015/level{}"
+__gaul_asset__ = "projects/sat-io/open-datasets/FAO/GAUL/GAUL_2024_L{}"
 
 
 @lru_cache(maxsize=1)
@@ -64,7 +62,7 @@ class Names(pd.DataFrame):
             id = name if name else admin
 
             # read the data and find if the element exist
-            column = "ADM{}_NAME" if is_name else "ADM{}_CODE"
+            column = "gaul{}_name" if is_name else "gaul{}_code"
             is_in = (
                 df.filter([column.format(i) for i in range(3)])
                 .apply(lambda col: col.str.lower())
@@ -81,17 +79,19 @@ class Names(pd.DataFrame):
                 else:
                     close_ids = [i.upper() for i in close_ids]
                 raise ValueError(
-                    f'The requested "{id}" is not part of FAO GAUL 2015. The closest '
+                    f'The requested "{id}" is not part of FAO GAUL 2024. The closest '
                     f'matches are: {", ".join(close_ids)}.'
                 )
 
             # Get the code of the associated country of the identifed area and the associated level
             line = is_in[~((~is_in).all(axis=1))].idxmax(1)
-            level = line.iloc[0][3]
+            level = line.iloc[0][4]
 
             # load the max_level available in the requested area
             sub_df = df[df[column.format(level)].str.fullmatch(id, case=False)]
-            max_level = next(i for i in reversed(range(3)) if (sub_df[f"ADM{i}_NAME"] != "").any())
+            max_level = next(
+                i for i in reversed(range(3)) if (sub_df[f"gaul{i}_name"] != "").any()
+            )
 
             # get the request level from user
             content_level, level = int(content_level), int(level)
@@ -116,7 +116,7 @@ class Names(pd.DataFrame):
             content_level = 0 if content_level == -1 else content_level
 
         # get the columns name corresponding to the requested level
-        columns = [f"ADM{content_level}_NAME", f"ADM{content_level}_CODE"]
+        columns = [f"gaul{content_level}_name", f"gaul{content_level}_code"]
 
         # the list will contain duplicate as all the smaller admin level will be included
         sub_df = sub_df.drop_duplicates(subset=columns, ignore_index=True)
@@ -157,10 +157,10 @@ class Items(ee.FeatureCollection):
         if names == [""] == admins:
             raise ValueError('at least "name" or "admin" need to be set.')
 
-        # special parsing for continents. They are saved as admins to avoid any duplication
-        continents = json.loads(__gaul_continent__.read_text())
-        if len(names) == 1 and names[0].lower() in continents:
-            admins = [c for c in continents[names[0].lower()]]
+        # special parsing for continents. They are associated to the countries by FAO.
+        continents = _df().continent.unique()
+        if len(names) == 1 and (c := names[0].lower()) in continents:
+            admins = [a for a in _df()[_df().continent == c].gaul0_code.unique()]
             names = [""]
 
         # use itertools, normally one of them is empty so it will raise an error
@@ -198,20 +198,20 @@ class Items(ee.FeatureCollection):
                 f"If you don't know the GAUL code, use the following code, "
                 f'it will return the GAUL codes as well:\n`Names(name="{name}")`'
             )
-        df.columns[0][3]
+        df.columns[0][4]
 
         # now load the useful one to get content_level
         df = Names(name, admin, content_level)
-        content_level = df.columns[1][3]
+        content_level = df.columns[1][4]
 
         # checks have already been performed in Names and there should
         # be one single result
-        ids = [int(v) for v in df[f"ADM{content_level}_CODE"].to_list()]
+        ids = [int(v) for v in df[f"gaul{content_level}_code"].to_list()]
 
         # read the accurate dataset
-        feature_collection = ee.FeatureCollection(__gaul_asset__.format(content_level)).filter(
-            ee.Filter.inList(f"ADM{content_level}_CODE", ids)
-        )
+        feature_collection = ee.FeatureCollection(
+            __gaul_asset__.format(content_level)
+        ).filter(ee.Filter.inList(f"gaul{content_level}_code", ids))
 
         return feature_collection
 
