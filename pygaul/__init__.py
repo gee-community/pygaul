@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 from deprecated.sphinx import deprecated, versionadded  # type: ignore [import-untyped]
 
-__version__ = "0.3.4"
+__version__ = "0.4.0"
 __author__ = "Pierrick Rambaud"
 __email__ = "pierrick.rambaud49@gmail.com"
 
