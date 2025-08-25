@@ -25,10 +25,10 @@ For example to extract the France geometry you can use the following code:
 .. jupyter-execute::
 
     import pygaul
+    from pygaul import utils
     from geemap import Map
-    import ee
 
-    ee.Initialize()
+    utils.initialize_documentation()
 
     fc = pygaul.Items(name="France")
 
@@ -42,10 +42,10 @@ If you know the code of the area you try to use, you can use the GADM code inste
 .. jupyter-execute::
 
     import pygaul
+    from pygaul import utils
     from geemap import Map
-    import ee
 
-    ee.Initialize()
+    utils.initialize_documentation()
 
     fc = pygaul.Items(admin="85")
 
@@ -62,10 +62,10 @@ One is not bind to only request a country, any level can be accessed using both 
 .. jupyter-execute::
 
     import pygaul
+    from pygaul import utils
     from geemap import Map
-    import ee
 
-    ee.Initialize()
+    utils.initialize_documentation()
 
     fc = pygaul.Items(name="Corse-du-Sud")
 
@@ -86,10 +86,10 @@ Using the :code:`content_level` option, one can require smaller administrative l
 .. jupyter-execute::
 
     import pygaul
+    from pygaul import utils
     from geemap import Map
-    import ee
 
-    ee.Initialize()
+    utils.initialize_documentation()
 
     fc = pygaul.Items(admin="85", content_level=2)
 
@@ -106,10 +106,10 @@ To perform regional analysis that aggregate multiple boundaries, you can now req
 .. jupyter-execute::
 
     import pygaul
+    from pygaul import utils
     from geemap import Map
-    import ee
 
-    ee.Initialize()
+    utils.initialize_documentation()
 
     fc = pygaul.Items(name=["France", "Germany"], content_level=1)
 
@@ -134,10 +134,10 @@ It's possible to request all countries from one single continent using one of th
 .. jupyter-execute::
 
     import pygaul
+    from pygaul import utils
     from geemap import Map
-    import ee
 
-    ee.Initialize()
+    utils.initialize_documentation()
 
     fc = pygaul.Items(name="europe")
 
@@ -188,9 +188,9 @@ If you make an error when writing the name of your input, the error message will
     :raises: ValueError
 
     import pygaul
-    import ee
+    from pygaul import utils
 
-    ee.Initialize()
+    utils.initialize_documentation()
 
     fc = pygaul.Items(name="Franc")
 
