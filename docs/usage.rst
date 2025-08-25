@@ -47,7 +47,7 @@ If you know the code of the area you try to use, you can use the GADM code inste
 
     utils.initialize_documentation()
 
-    fc = pygaul.Items(admin="85")
+    fc = pygaul.Items(admin="301")
 
     # display it in a map
     m = Map(zoom=5, center=[46.21, 2.21])
@@ -91,7 +91,7 @@ Using the :code:`content_level` option, one can require smaller administrative l
 
     utils.initialize_documentation()
 
-    fc = pygaul.Items(admin="85", content_level=2)
+    fc = pygaul.Items(admin="301", content_level=2)
 
     # display it in a map
     m = Map(zoom=5, center=[46.21, 2.21])
@@ -139,7 +139,7 @@ It's possible to request all countries from one single continent using one of th
 
     utils.initialize_documentation()
 
-    fc = pygaul.Items(name="europe")
+    fc = pygaul.Items(name="Europe")
 
     # display it in a map
     m = Map(zoom=4, center = [49.38237278700955, 31.464843750000004])
@@ -157,7 +157,7 @@ For example to get the names and codes of all the departments in France you can 
 
     import pygaul
 
-    pygaul.Names(admin="85", content_level=2)
+    pygaul.Names(admin="301", content_level=2) # france
 
 .. note::
 
@@ -167,7 +167,7 @@ For example to get the names and codes of all the departments in France you can 
 
         import pygaul
 
-        pygaul.Names(admin="1270", content_level=2, complete=True)
+        pygaul.Names(name="Auvergne-Rhône-Alpes", content_level=2, complete=True)
 
 .. note::
 
