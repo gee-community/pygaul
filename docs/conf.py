@@ -12,7 +12,7 @@ from datetime import datetime
 project = "pyGAUL"
 author = "Pierrick Rambaud"
 copyright = f"2023-{datetime.now().year}, {author}"
-release = "0.4.0"
+release = "0.4.1"
 
 # -- General configuration -----------------------------------------------------
 extensions = [
