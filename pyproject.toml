@@ -51,14 +51,14 @@ test = [
   "pytest-gee",
 ]
 doc = [
-    "sphinx>=6.2.1,<7", # https://github.com/pydata/pydata-sphinx-theme/issues/1404
+    "sphinx",
     "pydata-sphinx-theme",
     "sphinx-copybutton",
     "sphinx-design",
     "sphinx-icon",
     "sphinx-autoapi",
     "geemap",
-    "jupyter-sphinx!=0.4.0", # https://github.com/jupyter/jupyter-sphinx/issues/222
+    "jupyter-sphinx",
     "httplib2",
     "ipykernel",
     "geetools",

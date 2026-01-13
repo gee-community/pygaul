@@ -76,7 +76,7 @@ One is not bind to only request a country, any level can be accessed using both 
 
 .. warning::
 
-    The names of countries are all unique but not the smaller administrative layers. If you request a small area using name, make sure it's the one you are looking for before running your workflow. follow :ref:`usage:Duplication issue` for more information.
+    The names of countries are all unique but not the smaller administrative layers. If you request a small area using name, make sure it's the one you are looking for before running your workflow.
 
 Content of an admin layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^

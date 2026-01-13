@@ -53,7 +53,7 @@ The documentation contains 3 main sections:
 
          Help us improve the lib.
 
-   .. grid-item::
+            .. grid-item::
 
       .. card:: API
          :link: autoapi/index.html
