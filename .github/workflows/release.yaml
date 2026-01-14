@@ -6,6 +6,9 @@ on:
     types: [created]
 
 env:
+  EARTHENGINE_SERVICE_ACCOUNT: ${{ secrets.EARTHENGINE_SERVICE_ACCOUNT }}
+  EARTHENGINE_PROJECT: ${{ secrets.EARTHENGINE_PROJECT }}
+  FORCE_COLOR: 1
   PIP_ROOT_USER_ACTION: ignore
 
 jobs:
