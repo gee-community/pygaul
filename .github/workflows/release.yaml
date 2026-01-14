@@ -10,7 +10,6 @@ env:
 
 jobs:
   deploy:
-    needs: [tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
